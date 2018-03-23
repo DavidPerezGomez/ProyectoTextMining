@@ -1,0 +1,12 @@
+# archivos eclipse
+.project
+.classpath
+/bin
+/out
+
+# archivos idea
+.idea
+*.iml
+
+# carpeta de outputs
+src/outputs/
