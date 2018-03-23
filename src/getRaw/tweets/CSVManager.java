@@ -1,4 +1,4 @@
-package practicas.proyectoTextMinig.getRaw;
+package getRaw.tweets;
 
 import java.io.*;
 import weka.*;

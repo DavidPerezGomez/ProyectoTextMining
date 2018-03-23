@@ -1,4 +1,4 @@
-package practicas.proyectoTextMinig.getRaw;
+package getRaw.tweets;
 
 import utils.Utils;
 import weka.core.Instances;
@@ -9,7 +9,7 @@ import weka.filters.unsupervised.attribute.Remove;
 import javax.rmi.CORBA.Util;
 import java.io.File;
 
-public class MainTweet {
+public class MainTweets {
 
     public static void main(String[] args) {
 
@@ -19,12 +19,10 @@ public class MainTweet {
             inputPath = args[0];
             outputPath = args[1];
         } catch (IndexOutOfBoundsException e) {
-            inputPath = "/home/david/Escritorio/tweetSentiment.train.csv";
-            outputPath = "/home/david/Escritorio/tweetSentiment.train.arff";
-//            Utils.printlnWarning("Dos argumetos esperados:\n" +
-//                                         "\t1 - Ruta del archivo raw a leer\n" +
-//                                         "\t2 - Ruta del archivo .arff a crear");
-//            System.exit(1);
+            Utils.printlnWarning("Dos argumetos esperados:\n" +
+                                         "\t1 - Ruta del archivo raw a leer\n" +
+                                         "\t2 - Ruta del archivo .arff a crear");
+            System.exit(1);
         }
 
         tweetCSVToArff(inputPath, outputPath);
@@ -33,6 +31,8 @@ public class MainTweet {
 
     private static void tweetCSVToArff(String pInputPath, String pOutputPath) {
         if (!csvToArff(pInputPath, pOutputPath)){
+            // si la conversión no funciona, probamos a limpiar el csv
+            // y lo intentamos de nuevo
             String tmpCSV = "./tmp_clean_csv.csv";
             CSVManager.cleanCSV(pInputPath, tmpCSV);
             csvToArff(tmpCSV, pOutputPath);
