@@ -1,16 +1,16 @@
 package getRaw.tweets;
 
 import java.io.*;
-import weka.*;
 import weka.core.Instances;
-import weka.core.converters.ArffSaver;
 import weka.core.converters.CSVLoader;
-import weka.filters.Filter;
-import weka.filters.unsupervised.attribute.NominalToString;
-import weka.filters.unsupervised.attribute.Remove;
 
 public class CSVManager {
 
+    /**
+     * Carga los datos de un archivo .csv en isntancias.
+     * @param pPath
+     * @return
+     */
     public static Instances loadCSV(String pPath) {
         CSVLoader csvLoader = new CSVLoader();
         Instances instances;
@@ -24,6 +24,12 @@ public class CSVManager {
         return instances;
     }
 
+    /**
+     * Limpia un archivo .csv comprobando que no haya delimitadores mal abiertos/cerrados y
+     * escapando caracteres problemáticos.
+     * @param pInputPath
+     * @param pOutputPath
+     */
     public static void cleanCSV(String pInputPath, String pOutputPath) {
         BufferedReader br = null;
         StringBuilder newLines = null;
@@ -85,6 +91,13 @@ public class CSVManager {
 
     }
 
+    /**
+     * Dada una línea estilo .csv devuelve un array con cada uno de los valores.
+     * Ej.:
+     * "valor1","valor2","valor3" -> {valor1, valor2, valor3}
+     * @param pLine
+     * @return
+     */
     private static String[] separateCSVValue(String pLine) {
         String line = pLine;
         if(line.charAt(0) == '\"')
@@ -94,8 +107,14 @@ public class CSVManager {
         return line.split("\",\"");
     }
 
-    private static String escapeChar(String line, char pChar){
-        String newLine = line;
+    /**
+     * Escapa (pone \ delante) los todas las apariciones de pChar en pLine.
+     * @param pLine
+     * @param pChar
+     * @return
+     */
+    private static String escapeChar(String pLine, char pChar){
+        String newLine = pLine;
         int index = newLine.indexOf("" + pChar);
         while(index != -1) {
             newLine = insertSubstring(newLine, "\\", index);
@@ -104,6 +123,15 @@ public class CSVManager {
         return newLine;
     }
 
+    /**
+     * Inserta pSubstring en pString en la posición pIndex.
+     * Ej.:
+     * insertSubstring("abcdefg", "123", 4) -> "abcd123efg"
+     * @param pString
+     * @param pSubstring
+     * @param pIndex
+     * @return
+     */
     private static String insertSubstring(String pString, String pSubstring, int pIndex) {
         return pString.substring(0, pIndex) + pSubstring + pString.substring(pIndex, pString.length());
     }

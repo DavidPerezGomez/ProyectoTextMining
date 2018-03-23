@@ -5,14 +5,11 @@ import weka.core.Instances;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.NominalToString;
 import weka.filters.unsupervised.attribute.Remove;
-
-import javax.rmi.CORBA.Util;
 import java.io.File;
 
 public class MainTweets {
 
     public static void main(String[] args) {
-
         String inputPath = null;
         String outputPath = null;
         try {
@@ -25,22 +22,21 @@ public class MainTweets {
             System.exit(1);
         }
 
-        tweetCSVToArff(inputPath, outputPath);
-
+        csvToArff(inputPath, outputPath);
     }
 
-    private static void tweetCSVToArff(String pInputPath, String pOutputPath) {
-        if (!csvToArff(pInputPath, pOutputPath)){
+    private static void csvToArff(String pInputPath, String pOutputPath) {
+        if (!tweetCSVToArff(pInputPath, pOutputPath)){
             // si la conversión no funciona, probamos a limpiar el csv
             // y lo intentamos de nuevo
             String tmpCSV = "./tmp_clean_csv.csv";
             CSVManager.cleanCSV(pInputPath, tmpCSV);
-            csvToArff(tmpCSV, pOutputPath);
+            tweetCSVToArff(tmpCSV, pOutputPath);
             new File(tmpCSV).delete();
         }
     }
 
-    private static boolean csvToArff(String pInputPath, String pOutputPath) {
+    private static boolean tweetCSVToArff(String pInputPath, String pOutputPath) {
         Instances instances = CSVManager.loadCSV(pInputPath);
         if (instances != null) {
             // esta parte está escrita específicamente para nuestro caso
