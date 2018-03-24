@@ -26,20 +26,24 @@ public class MainTweets {
     }
 
     private static void csvToArff(String pInputPath, String pOutputPath) {
-        if (!tweetCSVToArff(pInputPath, pOutputPath)){
+        if (!tweetCSVToArff(pInputPath, pOutputPath, true)){
             // si la conversión no funciona, probamos a limpiar el csv
             // y lo intentamos de nuevo
             String tmpCSV = "./tmp_clean_csv.csv";
+            System.out.println("Procediendo a limpeza del archivo .csv");
             CSVManager.cleanCSV(pInputPath, tmpCSV);
-            tweetCSVToArff(tmpCSV, pOutputPath);
+            tweetCSVToArff(tmpCSV, pOutputPath, true);
             new File(tmpCSV).delete();
         }
     }
 
-    private static boolean tweetCSVToArff(String pInputPath, String pOutputPath) {
+    private static boolean tweetCSVToArff(String pInputPath, String pOutputPath, boolean pVerbose) {
+        if(pVerbose)
+            System.out.println(String.format("Procediendo a la conversión de %s a .arff", pInputPath));
         Instances instances = CSVManager.loadCSV(pInputPath);
         if (instances != null) {
             // esta parte está escrita específicamente para nuestro caso
+            // ponemos el segundo atributo (Sentiment) como clase
             instances.setClassIndex(1);
             try {
                 // eliminamos los atributos que sobran (Topic, TweetId y TweetDate)
@@ -61,8 +65,10 @@ public class MainTweets {
             }
 
             Utils.saveInstances(instances, pOutputPath);
+            System.out.println(String.format("Conversión completa. Nuevo archivo: %s", pOutputPath));
             return true;
         } else {
+            Utils.printlnError("Error en la conversión");
             return false;
         }
     }

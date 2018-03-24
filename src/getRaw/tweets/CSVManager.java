@@ -49,10 +49,6 @@ public class CSVManager {
             newLines.append(String.format("%s\n", header));
             String[] headerFields = separateCSVValue(header);
             int numValues = headerFields.length;
-            System.out.println("Campos:");
-            for (String field : headerFields) {
-                System.out.println(String.format("\t%s", field));
-            }
 
             String line;
             // readLine no devuelve line-terminators
