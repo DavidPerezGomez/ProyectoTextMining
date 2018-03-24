@@ -62,6 +62,7 @@ public class MainTweets {
                 instances.setRelationName("tweetSentiment");
             } catch (Exception e) {
                 e.printStackTrace();
+                System.exit(1);
             }
 
             Utils.saveInstances(instances, pOutputPath);
