@@ -6,8 +6,6 @@ import weka.core.Instances;
 import weka.core.converters.ArffSaver;
 import weka.core.converters.TextDirectoryLoader;
 
-import utils.Utils;
-
 public class MainMovies {
 
     public static void main(String[] args) throws Exception {
@@ -20,8 +18,8 @@ public class MainMovies {
             	//inputPath="/home/julen/Descargas/Conjuntos de Datos-20180322/movies_reviews/train";
             	//outputPath="/home/julen/Descargas/train.arff";
             } catch (IndexOutOfBoundsException e) {
-                Utils.printlnWarning("Dos argumetos esperados:\n" +
-                                             "\t1 - Ruta del archivo raw a leer\n" +
+                utils.Utils.printlnWarning("Dos argumetos esperados:\n" +
+                                             "\t1 - Ruta de la raíz del árbol de directorios.\n" +
                                              "\t2 - Ruta del archivo .arff a crear");
                 System.exit(1);
             }
@@ -29,12 +27,15 @@ public class MainMovies {
             convertirAArff(inputPath, outputPath);
         
     }
+
 	public static void convertirAArff(String pathOrigen, String pathDestino) throws Exception{
 		//Coge el path de origen y lo convierte en un dataset
 		TextDirectoryLoader loader = new TextDirectoryLoader();
 		File fichero=new File(pathOrigen);
 		loader.setDirectory(fichero);	
 		Instances dataRaw = loader.getDataSet();
+		dataRaw.renameAttribute(dataRaw.classIndex(), "class");
+		dataRaw.setRelationName("review");
 		
 		//cargamos el path destino
 		fichero=new File(pathDestino);

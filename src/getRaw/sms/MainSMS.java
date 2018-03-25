@@ -37,7 +37,7 @@ public class MainSMS {
 		PrintWriter pw = new PrintWriter(bw);
 		pw.println("@RELATION SMS");
 		pw.println();
-		pw.println("@ATTRIBUTE clase {ham, spam}");
+		pw.println("@ATTRIBUTE class {ham, spam}");
 		pw.println("@ATTRIBUTE Text STRING");
 		pw.println();
 		pw.println("@DATA");

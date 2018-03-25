@@ -60,6 +60,7 @@ public class MainTweets {
 
                 // ponemos el nombre de la relación
                 instances.setRelationName("tweetSentiment");
+                instances.renameAttribute(instances.classIndex(), "class");
             } catch (Exception e) {
                 e.printStackTrace();
                 System.exit(1);
