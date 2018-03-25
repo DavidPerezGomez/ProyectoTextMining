@@ -8,7 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import getRaw.movies.Utils;
+import utils.Utils;
 
 public class MainSMS {
 
@@ -17,20 +17,20 @@ public class MainSMS {
 		String inputPath = null;
 		String outputPath = null;
 		try {
-			//inputPath = args[0];
-			//outputPath = args[1];
-			inputPath="/home/julen/Descargas/Datos/sms_spam/SMS_SpamCollection.train.txt";
-			outputPath="/home/julen/Descargas/trainsms.arff";
+			inputPath = args[0];
+			outputPath = args[1];
+//			inputPath="/home/julen/Descargas/Datos/sms_spam/SMS_SpamCollection.train.txt";
+//			outputPath="/home/julen/Descargas/trainsms.arff";
 		} catch (IndexOutOfBoundsException e) {
-			Utils.printlnWarning("Dos argumetos esperados:\n" + "\t1 - Ruta del archivo raw a leer\n"
-					+ "\t2 - Ruta del archivo .arff a crear");
+			Utils.printlnWarning("Dos argumetos esperados:\n" +
+										 "\t1 - Ruta del archivo raw a leer\n" +
+                                         "\t2 - Ruta del archivo .arff a crear");
 			System.exit(1);
 		}
 		convertir(inputPath, outputPath);
 	}
 
 	public static void convertir(String pathOrigen, String pathDestino) throws IOException {
-
 		FileReader fr = new FileReader(new File(pathOrigen));
 		BufferedReader br = new BufferedReader(fr);
 		String linea;
@@ -57,8 +57,8 @@ public class MainSMS {
 				}
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.exit(1);
 		}
 		System.out.println(String.format("Conversión completa. Nuevo archivo: %s", pathDestino));
 	}

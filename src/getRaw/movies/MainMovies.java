@@ -6,6 +6,8 @@ import weka.core.Instances;
 import weka.core.converters.ArffSaver;
 import weka.core.converters.TextDirectoryLoader;
 
+import utils.Utils;
+
 public class MainMovies {
 
     public static void main(String[] args) throws Exception {
