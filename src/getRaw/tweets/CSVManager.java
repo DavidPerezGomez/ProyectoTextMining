@@ -2,6 +2,7 @@ package getRaw.tweets;
 
 import java.io.*;
 import weka.core.Instances;
+import weka.core.Utils;
 import weka.core.converters.CSVLoader;
 
 public class CSVManager {
@@ -63,10 +64,16 @@ public class CSVManager {
                     if (values.length == numValues) {
                         String[] newValues = new String[values.length];
                         for(int i = 0; i < values.length; i++) {
-                            newValues[i] = escapeChar(values[i], '\"');
+                            // utilizamos weka.core.Utils para preparar las String para weka
+                            newValues[i] = Utils.quote(values[i]);
+                            // si las String son correctas, Utils.quote() no añade comillas
+                            // hay que asegurarse de que todos los valores van entrecomillados
+                            if (!newValues[i].startsWith("\'"))
+                                newValues[i] = "\'" + newValues[i];
+                            if (!newValues[i].endsWith("\'"))
+                                newValues[i] = newValues[i] + "\'";
                         }
-                        String newLine = String.join("\",\"", newValues);
-                        newLine = "\"" + newLine + "\"";
+                        String newLine = String.join(",", newValues);
                         newLines.append(String.format("%s\n", newLine));
                     }
                 }
