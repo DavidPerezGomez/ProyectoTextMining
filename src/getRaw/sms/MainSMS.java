@@ -8,8 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import utils.Utils;
-
 public class MainSMS {
 
 	public static void main(String[] args) throws Exception {
@@ -22,7 +20,7 @@ public class MainSMS {
 //			inputPath="/home/julen/Descargas/Datos/sms_spam/SMS_SpamCollection.train.txt";
 //			outputPath="/home/julen/Descargas/trainsms.arff";
 		} catch (IndexOutOfBoundsException e) {
-			Utils.printlnWarning("Dos argumetos esperados:\n" +
+			utils.Utils.printlnWarning("Dos argumetos esperados:\n" +
 										 "\t1 - Ruta del archivo raw a leer\n" +
                                          "\t2 - Ruta del archivo .arff a crear");
 			System.exit(1);
@@ -51,8 +49,10 @@ public class MainSMS {
 				String texto2;
 				if (clase.equals("ham") || clase.equals("spam")) {
 					// texto=texto.replace(",", "")
-					texto2 = texto.replaceAll(";[-))(/''_,??+.^:\t,‘]", "");
-					pw.println(clase + ",'" + texto2 + "'");
+//					texto2 = texto.replaceAll(";[-))(/''_,??+.^:\t,‘]", "");
+                    texto2 = weka.core.Utils.quote(texto);
+//					pw.println(clase + ",\"" + texto2 + "\"");
+					pw.println(clase + "," + texto2);
 					pw.flush();
 				}
 			}
