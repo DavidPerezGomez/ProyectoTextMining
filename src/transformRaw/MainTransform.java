@@ -47,6 +47,7 @@ public class MainTransform {
             try {
                 instances.setClassIndex(0);
                 StringToWordVector toWordVectorFilter = new StringToWordVector(20000);
+                toWordVectorFilter.setLowerCaseTokens(true);
                 // sparse: true -> outputWordCounts (sparse)
                 toWordVectorFilter.setOutputWordCounts(pSparse);
                 toWordVectorFilter.setIDFTransform(pFormat.equals(TFIDF));
