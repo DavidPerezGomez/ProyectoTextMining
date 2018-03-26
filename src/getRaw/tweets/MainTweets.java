@@ -1,6 +1,5 @@
 package getRaw.tweets;
 
-import utils.Utils;
 import weka.core.Instances;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.NominalToString;
@@ -16,7 +15,7 @@ public class MainTweets {
             inputPath = args[0];
             outputPath = args[1];
         } catch (IndexOutOfBoundsException e) {
-            Utils.printlnWarning("Dos argumetos esperados:\n" +
+            utils.Utils.printlnWarning("Dos argumetos esperados:\n" +
                                          "\t1 - Ruta del archivo raw a leer\n" +
                                          "\t2 - Ruta del archivo .arff a crear");
             System.exit(1);
@@ -66,11 +65,11 @@ public class MainTweets {
                 System.exit(1);
             }
 
-            Utils.saveInstances(instances, pOutputPath);
+            utils.Utils.saveInstances(instances, pOutputPath);
             System.out.println(String.format("Conversión completa. Nuevo archivo: %s", pOutputPath));
             return true;
         } else {
-            Utils.printlnError("Error en la conversión");
+            utils.Utils.printlnError("Error en la conversión");
             return false;
         }
     }
