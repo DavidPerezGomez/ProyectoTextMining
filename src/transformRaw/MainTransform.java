@@ -18,13 +18,13 @@ public class MainTransform {
             inputPath = args[0];
             outputPath = args[1];
             format = args[2];
+            sparse = Boolean.parseBoolean(args[3]);
             if (format.toLowerCase().equals(BOW.toLowerCase()))
                 format = BOW;
             else if (format.toLowerCase().equals(TFIDF.toLowerCase()))
                 format = TFIDF;
             else
                 throw new IllegalArgumentException();
-            sparse = Boolean.parseBoolean(args[3]);
         } catch (IndexOutOfBoundsException e) {
             utils.Utils.printlnWarning("Cuarto argumetos esperados:\n" +
                                                "\t1 - Ruta del archivo .arff a leer\n" +
@@ -45,17 +45,22 @@ public class MainTransform {
         if (instances != null) {
             try {
                 instances.setClassIndex(0);
+                // ponemos un nombre distinto al atributo clase para que no de conflictos
+                // con una posible palaba que sea idéntica
+                instances.renameAttribute(instances.classIndex(), "class_attribute");
                 StringToWordVector toWordVectorFilter = new StringToWordVector(20000);
-                toWordVectorFilter.setLowerCaseTokens(true);
+//                toWordVectorFilter.setLowerCaseTokens(true);
                 toWordVectorFilter.setOutputWordCounts(true);
                 toWordVectorFilter.setIDFTransform(pFormat.equals(TFIDF));
                 toWordVectorFilter.setTFTransform(pFormat.equals(TFIDF));
                 toWordVectorFilter.setInputFormat(instances);
+                String relationName = instances.relationName();
                 instances = Filter.useFilter(instances, toWordVectorFilter);
-                // las instancias vienen por defecto en formato disperso
+                // las instancias vienen por defecto en formato disperso (sparse)
                 if (!pSparse) {
                     instances = utils.Utils.nonSparseFilter(instances);
                 }
+                instances.setRelationName(relationName);
             } catch (Exception e) {
                 e.printStackTrace();
                 System.exit(1);
