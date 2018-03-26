@@ -3,7 +3,6 @@ package transformRaw;
 import weka.core.Instances;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.StringToWordVector;
-import utils.Utils;
 
 public class MainTransform {
 
@@ -42,23 +41,26 @@ public class MainTransform {
     }
 
     private static void foo(String pInputPath, String pOutputPath, String pFormat, boolean pSparse) {
-        Instances instances = Utils.loadInstances(pInputPath, 0);
+        Instances instances = utils.Utils.loadInstances(pInputPath, 0);
         if (instances != null) {
             try {
                 instances.setClassIndex(0);
                 StringToWordVector toWordVectorFilter = new StringToWordVector(20000);
                 toWordVectorFilter.setLowerCaseTokens(true);
-                // sparse: true -> outputWordCounts (sparse)
-                toWordVectorFilter.setOutputWordCounts(pSparse);
+                toWordVectorFilter.setOutputWordCounts(true);
                 toWordVectorFilter.setIDFTransform(pFormat.equals(TFIDF));
                 toWordVectorFilter.setTFTransform(pFormat.equals(TFIDF));
                 toWordVectorFilter.setInputFormat(instances);
                 instances = Filter.useFilter(instances, toWordVectorFilter);
+                // las instancias vienen por defecto en formato disperso
+                if (!pSparse) {
+                    instances = utils.Utils.nonSparseFilter(instances);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 System.exit(1);
             }
-            Utils.saveInstances(instances, pOutputPath);
+            utils.Utils.saveInstances(instances, pOutputPath);
             System.out.println(String.format("Conversión completa. Nuevo archivo: %s", pOutputPath));
         }
     }

@@ -10,6 +10,7 @@ import weka.core.converters.ArffSaver;
 import weka.core.converters.ConverterUtils;
 import weka.filters.Filter;
 import weka.filters.supervised.attribute.AttributeSelection;
+import weka.filters.unsupervised.instance.SparseToNonSparse;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -241,6 +242,27 @@ public class Utils {
             e.printStackTrace();
         }
         return filteredData;
+    }
+
+    /**
+     * Convierte el set disperso de instancias pInstances a un nuevo set de las mismas
+     * instancias en formato no disperso.
+     *
+     * @param pInstances instancias dispersas que se quieren convertir a no dispersas
+     * @return instancias convertidas a formato no disperso
+     */
+    public static Instances nonSparseFilter(Instances pInstances) {
+        Instances filteredData = null;
+        try {
+            SparseToNonSparse filter = new SparseToNonSparse();
+            filter.setInputFormat(pInstances);
+            filteredData = Filter.useFilter(pInstances, filter);
+        } catch (Exception e) {
+            printlnError("Error al filtrar las instancias");
+            e.printStackTrace();
+        }
+        return filteredData;
+
     }
 
     /**
