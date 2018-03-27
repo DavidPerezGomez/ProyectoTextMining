@@ -37,19 +37,15 @@ public class MainTransform {
             System.exit(1);
         }
 
-        foo(inputPath, outputPath, format, sparse);
+        arffToWordVector(inputPath, outputPath, format, sparse);
     }
 
-    private static void foo(String pInputPath, String pOutputPath, String pFormat, boolean pSparse) {
+    private static void arffToWordVector(String pInputPath, String pOutputPath, String pFormat, boolean pSparse) {
         Instances instances = utils.Utils.loadInstances(pInputPath, 0);
         if (instances != null) {
             try {
-                instances.setClassIndex(0);
-                // ponemos un nombre distinto al atributo clase para que no de conflictos
-                // con una posible palaba que sea idéntica
-                instances.renameAttribute(instances.classIndex(), "class_attribute");
                 StringToWordVector toWordVectorFilter = new StringToWordVector(20000);
-//                toWordVectorFilter.setLowerCaseTokens(true);
+                toWordVectorFilter.setLowerCaseTokens(true);
                 toWordVectorFilter.setOutputWordCounts(true);
                 toWordVectorFilter.setIDFTransform(pFormat.equals(TFIDF));
                 toWordVectorFilter.setTFTransform(pFormat.equals(TFIDF));
