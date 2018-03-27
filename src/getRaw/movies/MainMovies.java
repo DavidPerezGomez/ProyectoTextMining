@@ -34,9 +34,11 @@ public class MainMovies {
 		File fichero=new File(pathOrigen);
 		loader.setDirectory(fichero);	
 		Instances dataRaw = loader.getDataSet();
-		dataRaw.renameAttribute(dataRaw.classIndex(), "class");
+		// ponemos el nombre de la relación y los atributos
 		dataRaw.setRelationName("review");
-		
+		dataRaw.renameAttribute(dataRaw.classIndex(), "@@class@@");
+		dataRaw.renameAttribute(0, "text");
+
 		//cargamos el path destino
 		fichero=new File(pathDestino);
 

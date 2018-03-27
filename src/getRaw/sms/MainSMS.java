@@ -35,10 +35,10 @@ public class MainSMS {
 		File fi = new File(pathDestino);
 		BufferedWriter bw = new BufferedWriter(new FileWriter(fi));
 		PrintWriter pw = new PrintWriter(bw);
-		pw.println("@RELATION SMS");
+		pw.println("@RELATION sms");
 		pw.println();
-		pw.println("@ATTRIBUTE class {ham, spam}");
-		pw.println("@ATTRIBUTE Text STRING");
+		pw.println("@ATTRIBUTE @@class@@ {ham, spam}");
+		pw.println("@ATTRIBUTE text STRING");
 		pw.println();
 		pw.println("@DATA");
 		try {
