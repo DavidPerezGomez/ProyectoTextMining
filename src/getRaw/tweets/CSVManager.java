@@ -19,7 +19,7 @@ public class CSVManager {
             csvLoader.setSource(new File(pPath));
             instances = csvLoader.getDataSet();
         } catch (IOException e) {
-            e.printStackTrace();
+            utils.Utils.printlnError(e.getMessage());
             instances = null;
         }
         return instances;
