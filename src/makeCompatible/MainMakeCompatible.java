@@ -14,22 +14,32 @@ public class MainMakeCompatible {
         String inputDev = null;
         String inputDicc = null;
         String outputDev = null;
-
         try {
             inputDev = args[0];
             inputDicc = args[1];
             outputDev = args[2];
         } catch (IndexOutOfBoundsException e) {
-            utils.Utils.printlnWarning("Cuarto argumetos esperados:\n" +
-                                               "\t1 - Ruta del archivo dev.arff a leer\n" +
-                                               "\t2 - Ruta del diccionario de train.arff" +
-                                               "\t3 - Ruta del archivo devBow.arff generado");
+			 String documentacion = "Este ejecutable convierte un archivo .arff crudo a un .arff con instancias de tipo string vector asegurándose de que es compatible con un diccionario de palabras dado.\n" +
+                                    "El archivo .arff original debe tener por lo menos un atributo de tipo string.\n" +
+                                    "Cuarto argumetos esperados:\n" +
+                                        "\t1 - Ruta del archivo .arff a leer\n" +
+                                        "\t2 - Ruta del diccionario\n" +
+                                        "\t3 - Ruta del archivo .arff a generar\n" +
+                                    "\nEjemplo: java -jar makeCompatible.jar /path/to/input/arff /path/to/dicc /path/to/output/arff";
+            System.out.println(documentacion);
             System.exit(1);
         }
-
         makeCompatible(inputDev, inputDicc, outputDev);
     }
 
+    /**
+     * Utiliza un diccionario para convertir las instancias string de un archivo .arff a string-vector
+     *
+     * @param inputDev ruta del .arff que se quiere transformar
+     * @param pInputDicc ruta del diccionario que se quiere utilizar
+     * @param outputDev ruta del .arff que se quiere generar
+     * @throws IOException
+     */
     private static void makeCompatible(String inputDev, String pInputDicc, String outputDev) throws IOException {
         Instances dev = utils.Utils.loadInstances(inputDev, 0);
         Instances devBow = null;
