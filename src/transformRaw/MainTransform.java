@@ -1,5 +1,7 @@
 package transformRaw;
 
+import java.io.File;
+
 import weka.core.Instances;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.StringToWordVector;
@@ -12,13 +14,15 @@ public class MainTransform {
     public static void main(String[] args) {
         String inputPath = null;
         String outputPath = null;
+        String diccPath=null;
         String format = null;
         boolean sparse = false;
         try {
             inputPath = args[0];
             outputPath = args[1];
-            format = args[2];
-            sparse = Boolean.parseBoolean(args[3]);
+            diccPath=args[2];
+            format = args[3];
+            sparse =Boolean.parseBoolean(args[4]);
             if (format.toLowerCase().equals(BOW.toLowerCase()))
                 format = BOW;
             else if (format.toLowerCase().equals(TFIDF.toLowerCase()))
@@ -29,7 +33,8 @@ public class MainTransform {
             utils.Utils.printlnWarning("Cuarto argumetos esperados:\n" +
                                                "\t1 - Ruta del archivo .arff a leer\n" +
                                                "\t2 - Ruta del archivo .arff a crear\n" +
-                                               "\t3 - Formato del nuevo archivo (" + BOW + " o " + TFIDF + ")\n" +
+                                               "\t3 - Ruta donde guardar el diccionario de palabras"+
+                                               "\t4 - Formato del nuevo archivo (" + BOW + " o " + TFIDF + ")\n" +
                                                "\t4 - Sparse o no sparse (true o false)");
             System.exit(1);
         } catch (IllegalArgumentException e) {
@@ -37,21 +42,23 @@ public class MainTransform {
             System.exit(1);
         }
 
-        arffToWordVector(inputPath, outputPath, format, sparse);
+        arffToWordVector(inputPath, outputPath,diccPath, format, sparse);
     }
 
-    private static void arffToWordVector(String pInputPath, String pOutputPath, String pFormat, boolean pSparse) {
+    private static void arffToWordVector(String pInputPath, String pOutputPath,String pDiccPath, String pFormat, boolean pSparse) {
         Instances instances = utils.Utils.loadInstances(pInputPath, 0);
+        StringToWordVector toWordVectorFilter = new StringToWordVector(20000);
         if (instances != null) {
             try {
-                StringToWordVector toWordVectorFilter = new StringToWordVector(20000);
                 toWordVectorFilter.setLowerCaseTokens(true);
                 toWordVectorFilter.setOutputWordCounts(true);
+                toWordVectorFilter.setDictionaryFileToSaveTo(new File(pDiccPath));
                 toWordVectorFilter.setIDFTransform(pFormat.equals(TFIDF));
                 toWordVectorFilter.setTFTransform(pFormat.equals(TFIDF));
                 toWordVectorFilter.setInputFormat(instances);
                 String relationName = instances.relationName();
                 instances = Filter.useFilter(instances, toWordVectorFilter);
+                
                 // las instancias vienen por defecto en formato disperso (sparse)
                 if (!pSparse) {
                     instances = utils.Utils.nonSparseFilter(instances);
@@ -61,6 +68,7 @@ public class MainTransform {
                 e.printStackTrace();
                 System.exit(1);
             }
+            
             utils.Utils.saveInstances(instances, pOutputPath);
             System.out.println(String.format("Conversión completa. Nuevo archivo: %s", pOutputPath));
         }
