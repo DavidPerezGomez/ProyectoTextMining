@@ -11,24 +11,32 @@ import java.io.PrintWriter;
 public class MainSMS {
 
 	public static void main(String[] args) throws Exception {
-
 		String inputPath = null;
 		String outputPath = null;
 		try {
 			inputPath = args[0];
 			outputPath = args[1];
-//			inputPath="/home/julen/Descargas/Datos/sms_spam/SMS_SpamCollection.train.txt";
-//			outputPath="/home/julen/Descargas/trainsms.arff";
 		} catch (IndexOutOfBoundsException e) {
-			utils.Utils.printlnWarning("Dos argumetos esperados:\n" +
-										 "\t1 - Ruta del archivo raw a leer\n" +
-                                         "\t2 - Ruta del archivo .arff a crear");
+			 String documentacion = "Este ejecutable convierte los sets de train y dev de clasificación de SMS en archivos .arff crudos.\n" +
+                                    "Los archivos de texto deben contener en cada línea la clasificación del mensaje separada del propio mensaje por un tabulador.\n" +
+                                    "Dos argumetos esperados:\n" +
+                                        "\t1 - Ruta del archivo de texto a leer.\n" +
+                                        "\t2 - Ruta del archivo .arff a crear\n" +
+                                    "\nEjemplo: java -jar getRawSMS.jar /path/to/sms/file /path/to/output/arff";
+            System.out.println(documentacion);
 			System.exit(1);
 		}
 		convertir(inputPath, outputPath);
 	}
 
-	public static void convertir(String pathOrigen, String pathDestino) throws IOException {
+    /**
+     * Convierte un archivo de texto con atributos separados por tabuladores a formato .arff
+     *
+     * @param pathOrigen ruta del archivo de texto a transformar
+     * @param pathDestino ruta del archivo .arff que se quiere generar
+     * @throws IOException
+     */
+	private static void convertir(String pathOrigen, String pathDestino) throws IOException {
 		FileReader fr = new FileReader(new File(pathOrigen));
 		BufferedReader br = new BufferedReader(fr);
 		String linea;
@@ -48,10 +56,7 @@ public class MainSMS {
 				String texto = argu[1];
 				String texto2;
 				if (clase.equals("ham") || clase.equals("spam")) {
-					// texto=texto.replace(",", "")
-//					texto2 = texto.replaceAll(";[-))(/''_,??+.^:\t,‘]", "");
                     texto2 = weka.core.Utils.quote(texto);
-//					pw.println(clase + ",\"" + texto2 + "\"");
 					pw.println(clase + "," + texto2);
 					pw.flush();
 				}
