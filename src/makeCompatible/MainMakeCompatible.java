@@ -11,30 +11,26 @@ import weka.filters.unsupervised.attribute.FixedDictionaryStringToWordVector;
 public class MainMakeCompatible {
 
     public static void main(String[] args) throws IOException {
-        String inputTrain = null;
         String inputDev = null;
         String inputDicc = null;
         String outputDev = null;
 
         try {
-            inputTrain = args[0];
-            inputDev = args[1];
-            inputDicc = args[2];
-            outputDev = args[3];
+            inputDev = args[0];
+            inputDicc = args[1];
+            outputDev = args[2];
         } catch (IndexOutOfBoundsException e) {
             utils.Utils.printlnWarning("Cuarto argumetos esperados:\n" +
-                                               "\t1 - Ruta del archivo trainBow.arff a leer\n" +
-                                               "\t2 - Ruta del archivo dev.arff a leer\n" +
-                                               "\t3 - Ruta del diccionario de train.arff" +
-                                               "\t4 - Ruta del archivo devBow.arff generado");
+                                               "\t1 - Ruta del archivo dev.arff a leer\n" +
+                                               "\t2 - Ruta del diccionario de train.arff" +
+                                               "\t3 - Ruta del archivo devBow.arff generado");
             System.exit(1);
         }
 
-        makeCompatible(inputTrain, inputDev, inputDicc, outputDev);
+        makeCompatible(inputDev, inputDicc, outputDev);
     }
 
-    private static void makeCompatible(String inputTrain, String inputDev, String pInputDicc, String outputDev) throws IOException {
-        Instances trainBow = utils.Utils.loadInstances(inputTrain, 0);
+    private static void makeCompatible(String inputDev, String pInputDicc, String outputDev) throws IOException {
         Instances dev = utils.Utils.loadInstances(inputDev, 0);
         Instances devBow = null;
         //preparamos el filtro con el diccionario de train y lo aplicamos a dev
