@@ -1,34 +1,26 @@
-package getBowCompatible;
+package makeCompatible;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import weka.core.Instances;
 import weka.core.converters.ArffSaver;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.FixedDictionaryStringToWordVector;
-import weka.filters.unsupervised.attribute.Standardize;
 
-public class getBowCompatible {
+public class MainMakeCompatible {
 
     public static void main(String[] args) throws IOException {
         String inputTrain = null;
         String inputDev = null;
         String inputDicc = null;
         String outputDev = null;
-		inputTrain = "/home/david/Escritorio/traintweet-word_vector.arff";
-		inputDev = "/home/david/Escritorio/devtweet.arff";
-		inputDicc = "/home/david/Escritorio/dicc";
-		outputDev = "/home/david/Escritorio/devtweet-word_vector.arff";
 
         try {
-//            inputTrain = args[0];
-//            inputDev = args[1];
-//            inputDicc = args[2];
-//            outputDev = args[3];
+            inputTrain = args[0];
+            inputDev = args[1];
+            inputDicc = args[2];
+            outputDev = args[3];
         } catch (IndexOutOfBoundsException e) {
             utils.Utils.printlnWarning("Cuarto argumetos esperados:\n" +
                                                "\t1 - Ruta del archivo trainBow.arff a leer\n" +
