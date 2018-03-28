@@ -22,7 +22,7 @@ public class getBowCompatible {
         inputDev = null;
         inputDicc= null;
         outputDev = null;
-		makeCompatible(inputTrain, inputDev,inputDicc, outputDev);
+		
 
         try {
         	inputTrain = args[0];
