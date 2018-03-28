@@ -19,7 +19,7 @@ public class MainMakeCompatible {
             inputDicc = args[1];
             outputDev = args[2];
         } catch (IndexOutOfBoundsException e) {
-			 String documentacion = "Este ejecutable convierte un archivo .arff crudo a un .arff con instancias de tipo string vector asegurándose de que es compatible con un diccionario de palabras dado.\n" +
+			 String documentacion = "Este ejecutable convierte un archivo .arff crudo a un .arff con atributos de tipo word-vector asegurándose de que es compatible con un diccionario de palabras dado.\n" +
                                     "El archivo .arff original debe tener por lo menos un atributo de tipo string.\n" +
                                     "Cuarto argumetos esperados:\n" +
                                         "\t1 - Ruta del archivo .arff a leer\n" +
@@ -33,7 +33,7 @@ public class MainMakeCompatible {
     }
 
     /**
-     * Utiliza un diccionario para convertir las instancias string de un archivo .arff a string-vector
+     * Utiliza un diccionario para convertir los atributos string de un archivo .arff a word-vector
      *
      * @param inputDev ruta del .arff que se quiere transformar
      * @param pInputDicc ruta del diccionario que se quiere utilizar
