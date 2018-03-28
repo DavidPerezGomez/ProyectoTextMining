@@ -15,15 +15,24 @@ public class MainTweets {
             inputPath = args[0];
             outputPath = args[1];
         } catch (IndexOutOfBoundsException e) {
-            utils.Utils.printlnWarning("Dos argumetos esperados:\n" +
+            String documentacion = "Este ejecutable convierte los sets de train y dev de registros de tweets archivos .arff crudos.\n" +
+                                    "El archivo a convertir debe estar en formato .csv y su primera línea debe ser la cabecera de los valores.\n" +
+                                    "Dos argumetos esperados:\n" +
                                          "\t1 - Ruta del archivo raw a leer\n" +
-                                         "\t2 - Ruta del archivo .arff a crear");
+                                         "\t2 - Ruta del archivo .arff a crear\n" +
+                                    "\nEjemplo: java -jar getRawTweets.jar /path/to/tweets/csv /path/to/output/arff";
+            System.out.println(documentacion);
             System.exit(1);
         }
-
         csvToArff(inputPath, outputPath);
     }
 
+    /**
+     * Transforma un archivo .csv a formato .arff
+     *
+     * @param pInputPath ruta del arvhico .csv que se quiere transformar
+     * @param pOutputPath ruta del archivo .arff que se quiere generar
+     */
     private static void csvToArff(String pInputPath, String pOutputPath) {
         if (!tweetCSVToArff(pInputPath, pOutputPath, true)){
             // si la conversión no funciona, probamos a limpiar el csv
@@ -32,16 +41,24 @@ public class MainTweets {
             System.out.println("Procediendo a limpeza del archivo .csv");
             CSVManager.cleanCSV(pInputPath, tmpCSV);
             tweetCSVToArff(tmpCSV, pOutputPath, true);
+            //eliminamos el archivo temporal
             new File(tmpCSV).delete();
         }
     }
 
+    /**
+     * Convierte el archivo .csv de resgistros de tweets a formato .csv
+     *
+     * @param pInputPath ruta del arvhico .csv que se quiere transformar
+     * @param pOutputPath ruta del archivo .arff que se quiere generar
+     * @param pVerbose si true, se imprime más información por consola
+     * @return
+     */
     private static boolean tweetCSVToArff(String pInputPath, String pOutputPath, boolean pVerbose) {
         if(pVerbose)
             System.out.println(String.format("Procediendo a la conversión de %s a .arff", pInputPath));
         Instances instances = CSVManager.loadCSV(pInputPath);
         if (instances != null) {
-            // esta parte está escrita específicamente para nuestro caso
             // ponemos el segundo atributo (Sentiment) como clase
             instances.setClassIndex(1);
             try {
@@ -67,10 +84,12 @@ public class MainTweets {
             }
 
             utils.Utils.saveInstances(instances, pOutputPath);
-            System.out.println(String.format("Conversión completa. Nuevo archivo: %s", pOutputPath));
+            if(pVerbose)
+                System.out.println(String.format("Conversión completa. Nuevo archivo: %s", pOutputPath));
             return true;
         } else {
-            utils.Utils.printlnError("Error en la conversión");
+            if(pVerbose)
+                utils.Utils.printlnError("Error en la conversión");
             return false;
         }
     }
