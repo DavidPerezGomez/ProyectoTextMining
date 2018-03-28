@@ -33,7 +33,7 @@ public class MainTransform {
             utils.Utils.printlnWarning("Cuarto argumetos esperados:\n" +
                                                "\t1 - Ruta del archivo .arff a leer\n" +
                                                "\t2 - Ruta del archivo .arff a crear\n" +
-                                               "\t3 - Ruta donde guardar el diccionario de palabras"+
+                                               "\t3 - Ruta donde guardar el diccionario de palabras\n"+
                                                "\t4 - Formato del nuevo archivo (" + BOW + " o " + TFIDF + ")\n" +
                                                "\t4 - Sparse o no sparse (true o false)");
             System.exit(1);
@@ -42,7 +42,7 @@ public class MainTransform {
             System.exit(1);
         }
 
-        arffToWordVector(inputPath, outputPath,diccPath, format, sparse);
+        arffToWordVector(inputPath, outputPath, diccPath, format, sparse);
     }
 
     private static void arffToWordVector(String pInputPath, String pOutputPath,String pDiccPath, String pFormat, boolean pSparse) {
