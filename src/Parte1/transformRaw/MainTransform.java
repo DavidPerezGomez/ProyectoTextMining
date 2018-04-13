@@ -1,4 +1,4 @@
-package transformRaw;
+package Parte1.transformRaw;
 
 import java.io.File;
 
@@ -38,7 +38,7 @@ public class MainTransform {
                                         "\t3 - Ruta donde guardar el diccionario de palabras\n"+
                                         "\t4 - Formato del nuevo archivo (" + BOW + " o " + TFIDF + ")\n" +
                                         "\t5 - Sparse o no sparse (true o false)\n" +
-                                    "\nEjemplo: java -jar transformRaw.jar /path/to/input/arff /path/to/output/arff /path/to/dicc BoW true";
+                                    "\nEjemplo: java -jar Parte1.transformRaw.jar /path/to/input/arff /path/to/output/arff /path/to/dicc BoW true";
             System.out.println(documentacion);
             System.exit(1);
         } catch (IllegalArgumentException e) {

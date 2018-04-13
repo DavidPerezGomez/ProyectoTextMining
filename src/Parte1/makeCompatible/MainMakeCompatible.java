@@ -1,4 +1,4 @@
-package makeCompatible;
+package Parte1.makeCompatible;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class MainMakeCompatible {
                                         "\t1 - Ruta del archivo .arff a leer\n" +
                                         "\t2 - Ruta del diccionario\n" +
                                         "\t3 - Ruta del archivo .arff a generar\n" +
-                                    "\nEjemplo: java -jar makeCompatible.jar /path/to/input/arff /path/to/dicc /path/to/output/arff";
+                                    "\nEjemplo: java -jar Parte1.makeCompatible.jar /path/to/input/arff /path/to/dicc /path/to/output/arff";
             System.out.println(documentacion);
             System.exit(1);
         }

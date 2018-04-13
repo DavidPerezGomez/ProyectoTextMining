@@ -1,4 +1,4 @@
-package getRaw.sms;
+package Parte1.getRaw.sms;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
