@@ -17,7 +17,7 @@ public class optimizeMP {
             String documentacion = "Este ejecutable devuelve los valores óptimos de los parámetros Hidden Layer y " +
                                    "Validation Threshold del clasificador Multilayer Perceptron para el set de instancias dado.\n" +
                                     "Un argumeto esperado:\n" +
-                                         "\t1 - Ruta del archivo arff con las instancias a evaluar\n" +
+                                         "\t1 - Ruta del archivo arff con las instancias a evaluar. La clase debe ser el último atributo.\n" +
                                     "\nEjemplo: java -jar optimizeMP.jar /path/to/arff/file";
             System.out.println(documentacion);
             System.exit(1);
