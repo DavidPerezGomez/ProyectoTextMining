@@ -32,10 +32,11 @@ public class FSSInfoGame {
             System.exit(1);
         }
         //cargamos el fichero
-        Instances datos=utils.Utils.loadInstances(trainBow); 
-        
+        Instances datos=utils.Utils.loadInstances(trainBow,0); 
+        System.out.println("index: "+datos.classIndex());
         try {
 			Instances filtrado=useFilter(datos);
+			
 			ArffSaver saver = new ArffSaver();
 	        saver.setInstances(filtrado);
 	        saver.setFile(new File(trainBowFSS));
@@ -48,14 +49,32 @@ public class FSSInfoGame {
         
         
     }
-    public static Instances useFilter(Instances datos) throws Exception {
+    /**
+     * Filtra los datos quitando atributos, para ello recorrera el parametro Threshold para hallar el valor optimo,
+     * teniendo en cuenta que parara la primera vez que disminuyan los atributos. 
+     * @param pInputPath
+     */
+    public static Instances useFilter(Instances pDatos) throws Exception {
 		AttributeSelection as=new AttributeSelection();
-				
-		as.setEvaluator(new InfoGainAttributeEval());
-		as.setSearch(new Ranker());
-		as.setInputFormat(datos);
+		Ranker r=new Ranker();
 		
-		return Filter.useFilter(datos, as);
-    	
+		boolean salir=false;
+		double i=-0.005; 
+		int numAtributos=pDatos.numAttributes();
+		Instances filtrado=null;
+		while(!salir) {
+			r.setThreshold(i);
+			as.setEvaluator(new InfoGainAttributeEval());
+			as.setSearch(r);
+			as.setInputFormat(pDatos);
+			filtrado=Filter.useFilter(pDatos, as);
+			if(numAtributos!=filtrado.numAttributes()) {
+				salir=true;
+			}
+			i=i+0.0005;
+			System.out.println(i);
+		}
+		return filtrado;	
     }
+   
 }
