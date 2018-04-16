@@ -10,7 +10,7 @@ import weka.core.converters.ArffSaver;
 import weka.filters.Filter;
 import weka.filters.supervised.attribute.AttributeSelection;
 
-public class FSSInfoGame {
+public class FSSInfoGain {
     public static void main(String[] args) {
         String trainBow = null;
         String trainBowFSS=null;
