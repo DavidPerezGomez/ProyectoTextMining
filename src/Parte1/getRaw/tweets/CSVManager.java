@@ -1,4 +1,4 @@
-package getRaw.tweets;
+package Parte1.getRaw.tweets;
 
 import java.io.*;
 import weka.core.Instances;
@@ -78,6 +78,7 @@ public class CSVManager {
                     }
                 }
             }
+            br.close();
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
@@ -87,6 +88,7 @@ public class CSVManager {
         try {
             bw = new BufferedWriter(new FileWriter(pOutputPath));
             bw.write(newLines.toString());
+            bw.close();
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
