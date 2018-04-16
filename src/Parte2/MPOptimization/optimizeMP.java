@@ -12,7 +12,8 @@ public class optimizeMP {
     public static void main(String[] args){
         String inputPath = null;
         try {
-            inputPath = args[0];
+//            inputPath = args[0];
+            inputPath = "/home/david/Documentos/Universidad/3º/2º Cuatrimestre/Sistemas de Apoyo a la Decisión/arff_files/breast-cancer.arff";
         } catch (IndexOutOfBoundsException e) {
             String documentacion = "Este ejecutable devuelve los valores óptimos de los parámetros Hidden Layer y " +
                                    "Validation Threshold del clasificador Multilayer Perceptron para el set de instancias dado.\n" +
@@ -33,37 +34,46 @@ public class optimizeMP {
         String[] hiddenLayersOptions = {"a", "i", "o", "t"};
         String bestHiddenLayers = "";
 
-        // atributo 2: validationThreshold
-        int minValidationThreshold = 0;
-        int maxValidationThreshold = 50;
-        int bestValThreshold = -1;
+        // atributo 2: learningRate
+        double minLearningRate = 0;
+        double maxLearningRate = 1;
+        double bestLearningRate = -1;
+        double learningRateInc = 0.1;
 
 
         int minClassIndex = Utils.getMinorityClassIndex(pInstances);
         double bestFMeasure = -1;
+        int it = 1;
 
         for(String hiddenLayers : hiddenLayersOptions) {
-            for (int valThreshold = minValidationThreshold; valThreshold <= maxValidationThreshold; valThreshold++) {
+            for (double learningRate = minLearningRate; learningRate <= maxLearningRate; learningRate+=learningRateInc) {
                 try {
-                    classifier.setValidationThreshold(valThreshold);
+                    classifier.setLearningRate(learningRate);
                     classifier.setHiddenLayers(hiddenLayers);
                     Evaluation evaluation = new Evaluation(pInstances);
-                    evaluation.crossValidateModel(classifier, pInstances, 4, new Random(3));
+                    evaluation.crossValidateModel(classifier, pInstances, 4, new Random(1));
                     double fMeasure = evaluation.fMeasure(minClassIndex);
+                    System.out.println("iteration " + it);
+                    System.out.println("learningRate " + learningRate);
+                    System.out.println("hiddenLayers " + hiddenLayers);
+                    System.out.print("fMeasure " + fMeasure);
                     if (fMeasure > bestFMeasure) {
+                    System.out.print(" --> BEST!!!");
                         bestFMeasure = fMeasure;
-                        bestValThreshold = valThreshold;
+                        bestLearningRate = learningRate;
                         bestHiddenLayers = hiddenLayers;
                     }
+                    System.out.println("\n");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                it++;
             }
         }
 
         System.out.println("Parámetros óptimos del clasificador Multilayer Perceptron para las instancias dadas:");
         System.out.println(String.format("\thidden layers: %s", bestHiddenLayers));
-        System.out.println(String.format("\tvalidation threshold: %d", bestValThreshold));
+        System.out.println(String.format("\tvalidation threshold: %f", bestLearningRate));
 
     }
 
