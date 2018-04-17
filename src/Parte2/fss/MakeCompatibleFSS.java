@@ -27,10 +27,8 @@ public class MakeCompatibleFSS {
                                         "\t2 - Ruta del archivo .arff a generar\n" +
                                     "\nEjemplo: java -jar Parte2.makeCompatibleFSS.jar /path/to/input/arff  /path/to/output/arff";
             System.out.println(documentacion);
-           // System.exit(1);
-            inputDev="C:\\Users\\enriq\\Desktop\\devbow.arff";
-            inputTrain="C:\\\\Users\\\\enriq\\\\Desktop\\\\a.arff";
-            outputDev="C:\\\\Users\\\\enriq\\\\Desktop\\\\b.arff";
+            System.exit(1);
+         
         }
         try {
 			makeCompatible(inputDev, inputTrain, outputDev);
