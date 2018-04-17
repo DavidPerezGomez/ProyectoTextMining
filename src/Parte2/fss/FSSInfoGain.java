@@ -33,7 +33,6 @@ public class FSSInfoGain {
         }
         //cargamos el fichero
         Instances datos=utils.Utils.loadInstances(trainBow,0); 
-        System.out.println("index: "+datos.classIndex());
         try {
 			Instances filtrado=useFilter(datos);
 			
@@ -52,7 +51,7 @@ public class FSSInfoGain {
     /**
      * Filtra los datos quitando atributos, para ello recorrera el parametro Threshold para hallar el valor optimo,
      * teniendo en cuenta que parara la primera vez que disminuyan los atributos. 
-     * @param pInputPath
+     * @param pDatos
      */
     public static Instances useFilter(Instances pDatos) throws Exception {
 		AttributeSelection as=new AttributeSelection();
