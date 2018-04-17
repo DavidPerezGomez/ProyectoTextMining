@@ -27,7 +27,10 @@ public class MakeCompatibleFSS {
                                         "\t2 - Ruta del archivo .arff a generar\n" +
                                     "\nEjemplo: java -jar Parte2.makeCompatibleFSS.jar /path/to/input/arff  /path/to/output/arff";
             System.out.println(documentacion);
-            System.exit(1);
+           // System.exit(1);
+            inputDev="C:\\Users\\enriq\\Desktop\\devbow.arff";
+            inputTrain="C:\\\\Users\\\\enriq\\\\Desktop\\\\a.arff";
+            outputDev="C:\\\\Users\\\\enriq\\\\Desktop\\\\b.arff";
         }
         try {
 			makeCompatible(inputDev, inputTrain, outputDev);
@@ -46,11 +49,13 @@ public class MakeCompatibleFSS {
      * @throws IOException
      */
     private static void makeCompatible(String inputDev,String inputTrain, String outputDev) throws Exception {
-    	Instances train = utils.Utils.loadInstances(inputTrain, 0);
-    	Instances dev=utils.Utils.loadInstances(inputDev, 0);
+    	Instances train = utils.Utils.loadInstances(inputTrain);
+    	Instances dev=utils.Utils.loadInstances(inputDev);
     	
     	Standardize filter = new Standardize();
     	filter.setInputFormat(train);
+    	
+    	Instances newTrain = Filter.useFilter(train, filter);
     	Instances devFiltrado = Filter.useFilter(dev, filter);
     	ArffSaver saver = new ArffSaver();
         saver.setInstances(devFiltrado);
