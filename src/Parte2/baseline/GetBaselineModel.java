@@ -35,6 +35,14 @@ public class GetBaselineModel {
 		}
 
 	}
+
+	/**
+	 * Entrena un clasificador Naive Bayes con la instancias dadas y guarda tanto el modelo como
+	 * sus estimación.
+	 * @param inputTrain
+	 * @param inputDev
+	 * @param path
+	 */
 	private static void getBaselineModel(String inputTrain, String inputDev, String path) {
     	Instances train = utils.Utils.loadInstances(inputTrain);
     	Instances dev=utils.Utils.loadInstances(inputDev);
@@ -211,8 +219,12 @@ public class GetBaselineModel {
 		}
     	
 	}
-	
-	
+
+	/**
+	 * Obtiene el índice de la clase minoritaria del set de instancias dado.
+	 * @param data
+	 * @return el índice de la clase minoritaria
+	 */
 	private static int getMinClass(Instances data) {
 		int[] classCounts = data.attributeStats(data.classIndex()).nominalCounts;
 		int classminid=0;

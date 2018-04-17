@@ -14,7 +14,6 @@ public class MainMovies {
         try {
             inputPath = args[0];
             outputPath = args[1];
-            throw new IndexOutOfBoundsException();
         } catch (IndexOutOfBoundsException e) {
             String documentacion = "Este ejecutable convierte los sets de train y dev de reviews de películas en archivos .arff crudos.\n" +
                                     "Los archivos de texto (uno por cada review) deben estar en varios directorios que los clasifiquen según el criterio elegido.\n" +

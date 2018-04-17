@@ -19,13 +19,13 @@ public class MainMakeCompatible {
             inputDicc = args[1];
             outputDev = args[2];
         } catch (IndexOutOfBoundsException e) {
-			 String documentacion = "Este ejecutable convierte un archivo .arff crudo a un .arff con atributos de tipo word-vector asegur·ndose de que es compatible con un diccionario de palabras dado.\n" +
+			 String documentacion = "Este ejecutable convierte un archivo .arff crudo a un .arff con atributos de tipo word-vector asegur√°ndose de que es compatible con un diccionario de palabras dado.\n" +
                                     "El archivo .arff original debe tener por lo menos un atributo de tipo string.\n" +
                                     "Cuarto argumetos esperados:\n" +
                                         "\t1 - Ruta del archivo .arff a leer\n" +
                                         "\t2 - Ruta del diccionario\n" +
                                         "\t3 - Ruta del archivo .arff a generar\n" +
-                                    "\nEjemplo: java -jar Parte1.makeCompatible.jar /path/to/input/arff /path/to/dicc /path/to/output/arff";
+                                    "\nEjemplo: java -jar makeCompatible.jar /path/to/input/arff /path/to/dicc /path/to/output/arff";
             System.out.println(documentacion);
             System.exit(1);
         }
