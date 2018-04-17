@@ -1,6 +1,7 @@
 package Parte2.mpOptimization;
 
 import utils.Utils;
+import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
 import weka.classifiers.functions.MultilayerPerceptron;
 import weka.core.Instances;
@@ -11,22 +12,25 @@ public class GetOptimumMP {
 
     public static void main(String[] args){
         String inputPath = null;
+        String outputPath = null;
         try {
             inputPath = args[0];
+            outputPath = args[1];
         } catch (IndexOutOfBoundsException e) {
             String documentacion = "Este ejecutable devuelve los valores óptimos de los parámetros Hidden Layer y " +
                                    "Validation Threshold del clasificador Multilayer Perceptron para el set de instancias dado.\n" +
-                                    "Un argumeto esperado:\n" +
+                                    "Dos argumetos esperados:\n" +
                                          "\t1 - Ruta del archivo arff con las instancias a evaluar. La clase debe ser el último atributo.\n" +
-                                    "\nEjemplo: java -jar GetOptimumMP.jar /path/to/arff/file";
+                                         "\t2 - Ruta del archivo de texto con los resultados esperados del clasificador a crear.\n" +
+                                    "\nEjemplo: java -jar GetOptimumMP.jar /path/to/arff/file /path/to/results/file";
             System.out.println(documentacion);
             System.exit(1);
         }
         Instances instances = Utils.loadInstances(inputPath);
-        getOptimalParameters(instances);
+        getOptimalMP(instances);
     }
 
-    private static void getOptimalParameters(Instances pInstances) {
+    private static MultilayerPerceptron getOptimalMP(Instances pInstances) {
         MultilayerPerceptron classifier = new MultilayerPerceptron();
 
         // atributo 1: hiddenLayers
@@ -49,8 +53,9 @@ public class GetOptimumMP {
                 try {
                     classifier.setLearningRate(learningRate);
                     classifier.setHiddenLayers(hiddenLayers);
-                    Evaluation evaluation = new Evaluation(pInstances);
-                    evaluation.crossValidateModel(classifier, pInstances, 4, new Random(1));
+                    System.out.println("Starting iteration");
+                    Evaluation evaluation = Utils.evalHoldOut(classifier, pInstances, 70);
+                    System.out.println("Finished iteration");
                     double fMeasure = evaluation.fMeasure(minClassIndex);
                     System.out.println("iteration " + it);
                     System.out.println("learningRate " + learningRate);
@@ -74,6 +79,9 @@ public class GetOptimumMP {
         System.out.println(String.format("\thidden layers: %s", bestHiddenLayers));
         System.out.println(String.format("\tvalidation threshold: %f", bestLearningRate));
 
+        classifier.setLearningRate(bestLearningRate);
+        classifier.setHiddenLayers(bestHiddenLayers);
+        return classifier;
     }
 
 }
