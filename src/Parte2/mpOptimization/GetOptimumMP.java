@@ -1,4 +1,4 @@
-package Parte2.MPOptimization;
+package Parte2.mpOptimization;
 
 import utils.Utils;
 import weka.classifiers.Evaluation;
@@ -7,19 +7,18 @@ import weka.core.Instances;
 
 import java.util.Random;
 
-public class optimizeMP {
+public class GetOptimumMP {
 
     public static void main(String[] args){
         String inputPath = null;
         try {
-//            inputPath = args[0];
-            inputPath = "/home/david/Documentos/Universidad/3º/2º Cuatrimestre/Sistemas de Apoyo a la Decisión/arff_files/breast-cancer.arff";
+            inputPath = args[0];
         } catch (IndexOutOfBoundsException e) {
             String documentacion = "Este ejecutable devuelve los valores óptimos de los parámetros Hidden Layer y " +
                                    "Validation Threshold del clasificador Multilayer Perceptron para el set de instancias dado.\n" +
                                     "Un argumeto esperado:\n" +
                                          "\t1 - Ruta del archivo arff con las instancias a evaluar. La clase debe ser el último atributo.\n" +
-                                    "\nEjemplo: java -jar optimizeMP.jar /path/to/arff/file";
+                                    "\nEjemplo: java -jar GetOptimumMP.jar /path/to/arff/file";
             System.out.println(documentacion);
             System.exit(1);
         }
