@@ -34,9 +34,10 @@ public class Utils {
      * @param pInstances  instancias con las que evaluar
      * @param pSeed       seed para la randomizanión
      * @return el objeto Evaluation que contiene los resultados de la evaluación, null si hay problemas al evaluar el clasificador.
+     * @throws Exception 
      */
-    public static Evaluation evalLeaveOneOut(Classifier pClassifier, Instances pInstances, long pSeed) {
-        Evaluation evaluation = null;
+    public static Evaluation evalLeaveOneOut(Classifier pClassifier, Instances pInstances, long pSeed) throws Exception {
+        Evaluation evaluation = new Evaluation(pInstances);
         try {
             evaluation.crossValidateModel(pClassifier, pInstances, pInstances.numInstances(), new Random(pSeed));
         } catch (Exception e) {
@@ -55,9 +56,10 @@ public class Utils {
      * @param pFolds      número de iteraciones a realizar
      * @param pSeed       seed para la randomizanión
      * @return el objeto Evaluation que contiene los resultados de la evaluación, null si hay problemas al evaluar el clasificador.
+     * @throws Exception 
      */
-    public static Evaluation evalKFoldCrossValidation(Classifier pClassifier, Instances pInstances, int pFolds, long pSeed) {
-        Evaluation evaluation = null;
+    public static Evaluation evalKFoldCrossValidation(Classifier pClassifier, Instances pInstances, int pFolds, long pSeed) throws Exception {
+        Evaluation evaluation =  new Evaluation(pInstances);
         try {
             evaluation.crossValidateModel(pClassifier, pInstances, pFolds, new Random(pSeed));
         } catch (Exception e) {
@@ -76,8 +78,9 @@ public class Utils {
      * @param pInstances    instancias con las que evaluar
      * @param pTrainPercent porcentaje de instancias que se usarán para el entrenamiento
      * @return el objeto Evaluation que contiene los resultados de la evaluación, null si hay problemas al evaluar el clasificador.
+     * @throws Exception 
      */
-    public static Evaluation evalHoldOut(Classifier pClassifier, Instances pInstances, double pTrainPercent) {
+    public static Evaluation evalHoldOut(Classifier pClassifier, Instances pInstances, double pTrainPercent) throws Exception {
         int numTrain = (int) (pInstances.numInstances() * pTrainPercent / 100);
         int numTest = pInstances.numInstances() - numTrain;
         pInstances.randomize(new Random(1));
@@ -94,9 +97,10 @@ public class Utils {
      * @param pTrain      instancias que se usarán para el entrenamiento
      * @param pTest       instancias que se usarán para el entrenamiento
      * @return el objeto Evaluation que contiene los resultados de la evaluación, null si hay problemas al evaluar el clasificador.
+     * @throws Exception 
      */
-    public static Evaluation evalHoldOut(Classifier pClassifier, Instances pTrain, Instances pTest) {
-        Evaluation evaluation = null;
+    public static Evaluation evalHoldOut(Classifier pClassifier, Instances pTrain, Instances pTest) throws Exception {
+        Evaluation evaluation = new Evaluation(pTrain);
         try {
             pClassifier.buildClassifier(pTrain);
             evaluation.evaluateModel(pClassifier, pTest);
@@ -114,9 +118,10 @@ public class Utils {
      * @param pClassifier clasificador a evaluar
      * @param pInstances  instancias con las que evaluar
      * @return el objeto Evaluation que contiene los resultados de la evaluación, null si hay problemas al evaluar el clasificador.
+     * @throws Exception 
      */
-    public static Evaluation evalWithTrainSet(Classifier pClassifier, Instances pInstances) {
-        Evaluation evaluation = null;
+    public static Evaluation evalWithTrainSet(Classifier pClassifier, Instances pInstances) throws Exception {
+        Evaluation evaluation = new Evaluation(pInstances);
         try {
             pClassifier.buildClassifier(pInstances);
             evaluation.evaluateModel(pClassifier, pInstances);
@@ -273,7 +278,7 @@ public class Utils {
      */
     public static void writeToFile(String pText, String pPath) {
         try {
-            BufferedWriter bf = new BufferedWriter(new FileWriter(pPath));
+            BufferedWriter bf = new BufferedWriter(new FileWriter(pPath, true));
             bf.write(pText);
             bf.close();
         } catch (IOException e) {
