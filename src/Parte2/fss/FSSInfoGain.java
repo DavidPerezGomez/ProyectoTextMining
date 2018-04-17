@@ -48,6 +48,7 @@ public class FSSInfoGain {
         
         
     }
+
     /**
      * Filtra los datos quitando atributos, para ello recorrera el parametro Threshold para hallar el valor optimo,
      * teniendo en cuenta que parara la primera vez que disminuyan los atributos. 

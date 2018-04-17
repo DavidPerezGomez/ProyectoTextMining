@@ -30,7 +30,13 @@ public class GetOptimumMP {
         getOptimalMP(instances);
     }
 
-    private static MultilayerPerceptron getOptimalMP(Instances pInstances) {
+    /**
+     * Escribe por pantalla los valores óptimos de los parámetros hiddenLayers y learningRate
+     * del clasificador MultilayerPerceptron para las instancias dadas.
+     * @param pInstances
+     * @return
+     */
+    private static void getOptimalMP(Instances pInstances) {
         MultilayerPerceptron classifier = new MultilayerPerceptron();
 
         // atributo 1: hiddenLayers
@@ -81,7 +87,6 @@ public class GetOptimumMP {
 
         classifier.setLearningRate(bestLearningRate);
         classifier.setHiddenLayers(bestHiddenLayers);
-        return classifier;
     }
 
 }

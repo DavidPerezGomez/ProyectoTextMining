@@ -45,6 +45,14 @@ public class GetMP {
         saveResults(classifier, instances, outputPath);
     }
 
+    /**
+     * Devuelve un clasificador MultilayerPerceptron con los valores dados para los parámetros hiddenLayers y
+     * learningRate y que ha sido entrenado con las instancias dadas.
+     * @param pInstances
+     * @param pHidenLayers
+     * @param pLearningRate
+     * @return
+     */
     private static MultilayerPerceptron buildMP(Instances pInstances, String pHidenLayers, double pLearningRate) {
         MultilayerPerceptron classifier = new MultilayerPerceptron();
         classifier.setHiddenLayers(pHidenLayers);
@@ -58,6 +66,13 @@ public class GetMP {
         return classifier;
     }
 
+    /**
+     * Guarda los resultados de la estminación de la calidad mediante evaluación no honesta y 10-fold cross-validation
+     * del clasificador y lsa instancias dados.
+     * @param pClassifier
+     * @param pInstances
+     * @param pPath
+     */
     private static void saveResults(MultilayerPerceptron pClassifier, Instances pInstances, String pPath) {
         try {
             Evaluation eval10Fold = Utils.evalKFoldCrossValidation(pClassifier, pInstances, 10, 1);
