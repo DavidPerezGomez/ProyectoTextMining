@@ -73,6 +73,13 @@ public class FSSInfoGain {
 			i=i+0.0005;
 			System.out.println(i);
 		}
+		System.out.println("==========================================================");
+		System.out.println("NUMTOSELECT: POR DEFECTO (-1)");
+		System.out.println("THRESHOLD UTILIZADO: "+i);
+    	System.out.println("==========================================================");
+    	System.out.println("");
+    	System.out.println("");
+    	System.out.println("");
 		return filtrado;	
     }
    

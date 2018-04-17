@@ -29,6 +29,7 @@ public class MakeCompatibleFSS {
                                     "\nEjemplo: java -jar makeCompatibleFSS.jar /path/to/dev/arff /path/to/train/arff /path/to/output/arff";
             System.out.println(documentacion);
             System.exit(1);
+         
         }
         try {
 			makeCompatible(inputDev, inputTrain, outputDev);
@@ -47,11 +48,13 @@ public class MakeCompatibleFSS {
      * @throws IOException
      */
     private static void makeCompatible(String inputDev,String inputTrain, String outputDev) throws Exception {
-    	Instances train = utils.Utils.loadInstances(inputTrain, 0);
-    	Instances dev=utils.Utils.loadInstances(inputDev, 0);
+    	Instances train = utils.Utils.loadInstances(inputTrain);
+    	Instances dev=utils.Utils.loadInstances(inputDev);
     	
     	Standardize filter = new Standardize();
     	filter.setInputFormat(train);
+    	
+    	Instances newTrain = Filter.useFilter(train, filter);
     	Instances devFiltrado = Filter.useFilter(dev, filter);
     	ArffSaver saver = new ArffSaver();
         saver.setInstances(devFiltrado);
