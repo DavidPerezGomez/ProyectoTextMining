@@ -7,7 +7,6 @@ import java.io.*;
 public class CleanFiles {
 
     /**
-     *
      * @param pDirRoot
      * @param pTempRoot
      */
@@ -27,7 +26,6 @@ public class CleanFiles {
     }
 
     /**
-     *
      * @param pDirRoot
      */
     private static void cleanFiles(String pDirRoot) {
@@ -47,7 +45,6 @@ public class CleanFiles {
     }
 
     /**
-     *
      * @param pFile
      */
     private static void cleanFile(File pFile) {
