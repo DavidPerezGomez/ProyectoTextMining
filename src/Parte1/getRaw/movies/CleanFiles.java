@@ -57,11 +57,9 @@ public class CleanFiles {
                 text.append(line);
             }
             String newText = text.toString().replaceAll("[^\\p{Print}]", "");
-            System.out.println(newText);
             BufferedWriter bw = new BufferedWriter(new FileWriter(pFile));
             bw.write(newText, 0, newText.length());
             bw.newLine();
-            System.out.println(pFile.getAbsolutePath());
             br.close();
             bw.close();
         } catch (FileNotFoundException e) {
