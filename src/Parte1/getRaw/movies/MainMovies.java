@@ -24,7 +24,16 @@ public class MainMovies {
             System.out.println(documentacion);
             System.exit(1);
         }
-        convertirAArff(inputPath, outputPath);
+        // se obtiene una ruta que no exista para crear la carpeta temporal
+        String tempDir = inputPath + "_clean";
+        File file = new File(tempDir);
+        while (file.exists()) {
+            tempDir += "0";
+            file = new File(tempDir);
+        }
+        // se crea la carpeta temporal y se limpian los archivos
+        CleanFiles.cleanFiles(inputPath, tempDir);
+        convertirAArff(tempDir, outputPath);
     }
 
     /**
@@ -40,6 +49,7 @@ public class MainMovies {
         TextDirectoryLoader loader = new TextDirectoryLoader();
         File fichero = new File(pathOrigen);
         loader.setDirectory(fichero);
+        loader.setCharSet("UTF-8");
         Instances dataRaw = loader.getDataSet();
 
         // ponemos el nombre de la relación y los atributos
