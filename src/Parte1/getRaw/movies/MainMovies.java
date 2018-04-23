@@ -25,6 +25,9 @@ public class MainMovies {
             System.exit(1);
         }
         // se obtiene una ruta que no exista para crear la carpeta temporal
+        while (inputPath.endsWith("/")) {
+            inputPath = inputPath.substring(0, inputPath.length()-1);
+        }
         String tempDir = inputPath + "_clean";
         File file = new File(tempDir);
         while (file.exists()) {
