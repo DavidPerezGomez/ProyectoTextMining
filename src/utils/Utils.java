@@ -278,7 +278,7 @@ public class Utils {
      */
     public static void writeToFile(String pText, String pPath) {
         try {
-            BufferedWriter bf = new BufferedWriter(new FileWriter(pPath, true));
+            BufferedWriter bf = new BufferedWriter(new FileWriter(pPath));
             bf.write(pText);
             bf.close();
         } catch (IOException e) {
