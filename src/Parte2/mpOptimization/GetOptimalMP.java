@@ -8,7 +8,7 @@ import weka.core.Instances;
 
 import java.util.Random;
 
-public class GetOptimumMP {
+public class GetOptimalMP {
 
     public static void main(String[] args){
         String inputPath = null;
@@ -22,26 +22,30 @@ public class GetOptimumMP {
                                     "Dos argumetos esperados:\n" +
                                          "\t1 - Ruta del archivo arff con las instancias a evaluar. La clase debe ser el último atributo.\n" +
                                          "\t2 - Ruta del archivo de texto con los resultados esperados del clasificador a crear.\n" +
-                                    "\nEjemplo: java -jar GetOptimumMP.jar /path/to/arff/file /path/to/results/file";
+                                    "\nEjemplo: java -jar GetOptimalMP.jar /path/to/arff/file /path/to/results/file";
             System.out.println(documentacion);
             System.exit(1);
         }
         Instances instances = Utils.loadInstances(inputPath);
-        getOptimalMP(instances);
+        String results = getOptimalMP(instances);
+        utils.Utils.writeToFile(results, outputPath);
     }
 
     /**
-     * Escribe por pantalla los valores óptimos de los parámetros hiddenLayers y learningRate
+     * Devuelve una string listando los valores óptimos de los parámetros hiddenLayers y learningRate
      * del clasificador MultilayerPerceptron para las instancias dadas.
      * @param pInstances
      * @return
      */
-    private static void getOptimalMP(Instances pInstances) {
+    private static String getOptimalMP(Instances pInstances) {
         MultilayerPerceptron classifier = new MultilayerPerceptron();
 
         // atributo 1: hiddenLayers
-        String[] hiddenLayersOptions = {"a", "i", "o", "t"};
-        String bestHiddenLayers = "";
+//        String[] hiddenLayersOptions = {"a", "i", "o", "t"};
+//        String bestHiddenLayers = "";
+        int minHiddenLayerNodes = 0;
+        int maxHiddenLayerNodes = 10;
+        int bestHiddenLayerNodes = -1;
 
         // atributo 2: learningRate
         double minLearningRate = 0;
@@ -54,9 +58,10 @@ public class GetOptimumMP {
         double bestFMeasure = -1;
         int it = 1;
 
-        for(String hiddenLayers : hiddenLayersOptions) {
+        for (int hiddenLayerNodes = minHiddenLayerNodes; hiddenLayerNodes <= maxHiddenLayerNodes; hiddenLayerNodes++) {
             for (double learningRate = minLearningRate; learningRate <= maxLearningRate; learningRate+=learningRateInc) {
                 try {
+                    String hiddenLayers = Integer.toString(hiddenLayerNodes);
                     classifier.setLearningRate(learningRate);
                     classifier.setHiddenLayers(hiddenLayers);
                     System.out.println("Starting iteration");
@@ -71,7 +76,7 @@ public class GetOptimumMP {
                     System.out.print(" --> BEST!!!");
                         bestFMeasure = fMeasure;
                         bestLearningRate = learningRate;
-                        bestHiddenLayers = hiddenLayers;
+                        bestHiddenLayerNodes = hiddenLayerNodes;
                     }
                     System.out.println("\n");
                 } catch (Exception e) {
@@ -81,12 +86,12 @@ public class GetOptimumMP {
             }
         }
 
-        System.out.println("Parámetros óptimos del clasificador Multilayer Perceptron para las instancias dadas:");
-        System.out.println(String.format("\thidden layers: %s", bestHiddenLayers));
-        System.out.println(String.format("\tvalidation threshold: %f", bestLearningRate));
+        StringBuilder results = new StringBuilder();
+        results.append("Parámetros óptimos del clasificador Multilayer Perceptron para las instancias dadas:\n");
+        results.append(String.format("\thidden layers: %s", bestHiddenLayerNodes));
+        results.append(String.format("\tvalidation threshold: %f", bestLearningRate));
 
-        classifier.setLearningRate(bestLearningRate);
-        classifier.setHiddenLayers(bestHiddenLayers);
+        return results.toString();
     }
 
 }
