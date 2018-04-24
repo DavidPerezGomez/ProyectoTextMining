@@ -10,6 +10,7 @@ import weka.core.converters.ArffSaver;
 import weka.core.converters.ConverterUtils;
 import weka.filters.Filter;
 import weka.filters.supervised.attribute.AttributeSelection;
+import weka.filters.unsupervised.attribute.Reorder;
 import weka.filters.unsupervised.instance.SparseToNonSparse;
 
 import java.io.BufferedWriter;
@@ -222,6 +223,26 @@ public class Utils {
             }
         }
         return minClassIndex;
+    }
+
+    /**
+     * Mueve el primer atributo a la última posición manteniendo el orden del resto.
+     * Por defecto, el índice de la clase se cambia a la última posición tras el filtrado.
+     * @param pInstances
+     * @return
+     */
+    public static Instances moveFirstAttrToLast(Instances pInstances) {
+        Instances newInstances = null;
+        try {
+            Reorder filter = new Reorder();
+            filter.setAttributeIndices("2-last,1");
+            filter.setInputFormat(pInstances);
+            newInstances = Filter.useFilter(pInstances, filter);
+        } catch (Exception e) {
+            printlnError("Error al filtrar los atributos");
+            e.printStackTrace();
+        }
+        return newInstances;
     }
 
     /**

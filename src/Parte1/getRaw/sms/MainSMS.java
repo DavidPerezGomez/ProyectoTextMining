@@ -45,8 +45,8 @@ public class MainSMS {
 		PrintWriter pw = new PrintWriter(bw);
 		pw.println("@RELATION sms");
 		pw.println();
-		pw.println("@ATTRIBUTE @@class@@ {ham, spam}");
 		pw.println("@ATTRIBUTE text STRING");
+		pw.println("@ATTRIBUTE @@class@@ {ham, spam}");
 		pw.println();
 		pw.println("@DATA");
 		try {
@@ -57,7 +57,7 @@ public class MainSMS {
 				String texto2;
 				if (clase.equals("ham") || clase.equals("spam")) {
                     texto2 = weka.core.Utils.quote(texto);
-					pw.println(clase + "," + texto2);
+					pw.println(texto2 + "," + clase);
 					pw.flush();
 				}
 			}

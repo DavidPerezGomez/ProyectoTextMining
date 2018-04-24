@@ -1,6 +1,7 @@
 package Parte1.getRaw.tweets;
 
 import weka.core.Instances;
+import weka.core.Utils;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.NominalToString;
 import weka.filters.unsupervised.attribute.Remove;
@@ -78,6 +79,9 @@ public class MainTweets {
                 instances.setRelationName("tweetSentiment");
                 instances.renameAttribute(instances.classIndex(), "@@class@@");
                 instances.renameAttribute(1, "text");
+                System.out.println(instances.classIndex());
+                instances = utils.Utils.moveFirstAttrToLast(instances);
+                System.out.println(instances.classIndex());
             } catch (Exception e) {
                 e.printStackTrace();
                 System.exit(1);
