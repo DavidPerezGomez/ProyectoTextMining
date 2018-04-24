@@ -3,6 +3,7 @@ package Parte1.makeCompatible;
 import java.io.File;
 import java.io.IOException;
 
+import utils.Utils;
 import weka.core.Instances;
 import weka.core.converters.ArffSaver;
 import weka.filters.Filter;
@@ -41,7 +42,7 @@ public class MainMakeCompatible {
      * @throws IOException
      */
     private static void makeCompatible(String inputDev, String pInputDicc, String outputDev) throws IOException {
-        Instances dev = utils.Utils.loadInstances(inputDev);
+        Instances dev = Utils.loadInstances(inputDev);
         Instances devBow = null;
         //preparamos el filtro con el diccionario de train y lo aplicamos a dev
         FixedDictionaryStringToWordVector filtro = new FixedDictionaryStringToWordVector();
@@ -51,6 +52,9 @@ public class MainMakeCompatible {
             filtro.setInputFormat(dev);
             devBow = Filter.useFilter(dev, filtro);
             devBow.setRelationName(dev.relationName());
+            if (devBow.classIndex() == 0) {
+                    devBow = Utils.moveFirstAttrToLast(devBow);
+                }
         } catch (Exception e) {
             e.printStackTrace();
         }
