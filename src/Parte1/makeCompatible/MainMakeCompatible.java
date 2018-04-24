@@ -41,7 +41,7 @@ public class MainMakeCompatible {
      * @throws IOException
      */
     private static void makeCompatible(String inputDev, String pInputDicc, String outputDev) throws IOException {
-        Instances dev = utils.Utils.loadInstances(inputDev, 0);
+        Instances dev = utils.Utils.loadInstances(inputDev);
         Instances devBow = null;
         //preparamos el filtro con el diccionario de train y lo aplicamos a dev
         FixedDictionaryStringToWordVector filtro = new FixedDictionaryStringToWordVector();

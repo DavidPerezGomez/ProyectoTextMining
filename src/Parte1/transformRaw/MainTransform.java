@@ -59,7 +59,7 @@ public class MainTransform {
      * @param pSparse indica si el atributo word-vector estará en formato sparse (disperso) o no
      */
     private static void arffToWordVector(String pInputPath, String pOutputPath,String pDiccPath, String pFormat, boolean pSparse) {
-        Instances instances = utils.Utils.loadInstances(pInputPath, 0);
+        Instances instances = utils.Utils.loadInstances(pInputPath);
         StringToWordVector toWordVectorFilter = new StringToWordVector(20000);
         if (instances != null) {
             try {
@@ -71,10 +71,13 @@ public class MainTransform {
                 toWordVectorFilter.setInputFormat(instances);
                 String relationName = instances.relationName();
                 instances = Filter.useFilter(instances, toWordVectorFilter);
-                
+
                 // las instancias vienen por defecto en formato disperso (sparse)
                 if (!pSparse) {
                     instances = utils.Utils.nonSparseFilter(instances);
+                }
+                if (instances.classIndex() == 0) {
+                    instances = utils.Utils.moveFirstAttrToLast(instances);
                 }
                 instances.setRelationName(relationName);
             } catch (Exception e) {

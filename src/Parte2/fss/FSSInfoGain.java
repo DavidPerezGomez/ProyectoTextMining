@@ -43,7 +43,7 @@ public class FSSInfoGain {
             outputDev = null;
         }
         //cargamos el fichero
-        Instances instances = utils.Utils.loadInstances(inputArff,0);
+        Instances instances = utils.Utils.loadInstances(inputArff);
         try {
             AttributeSelection filter = getASFilter(instances);
 			Instances filteredInstances = Filter.useFilter(instances, filter);
