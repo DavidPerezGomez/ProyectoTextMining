@@ -43,7 +43,7 @@ public class MainSMS {
 		File fi = new File(pathDestino);
 		BufferedWriter bw = new BufferedWriter(new FileWriter(fi));
 		PrintWriter pw = new PrintWriter(bw);
-		pw.println("@RELATION sms");
+		pw.println("@RELATION smsSpam");
 		pw.println();
 		pw.println("@ATTRIBUTE text STRING");
 		pw.println("@ATTRIBUTE @@class@@ {ham, spam}");

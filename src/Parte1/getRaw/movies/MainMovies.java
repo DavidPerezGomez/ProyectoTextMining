@@ -56,7 +56,7 @@ public class MainMovies {
         Instances dataRaw = loader.getDataSet();
 
         // ponemos el nombre de la relación y los atributos
-        dataRaw.setRelationName("review");
+        dataRaw.setRelationName("movieReviews");
         dataRaw.renameAttribute(dataRaw.classIndex(), "@@class@@");
         dataRaw.renameAttribute(0, "text");
 

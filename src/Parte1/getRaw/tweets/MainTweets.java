@@ -76,12 +76,10 @@ public class MainTweets {
                 instances = Filter.useFilter(instances, toStringFilter);
 
                 // ponemos el nombre de la relación y los atributos
-                instances.setRelationName("tweetSentiment");
                 instances.renameAttribute(instances.classIndex(), "@@class@@");
                 instances.renameAttribute(1, "text");
-                System.out.println(instances.classIndex());
                 instances = utils.Utils.moveFirstAttrToLast(instances);
-                System.out.println(instances.classIndex());
+                instances.setRelationName("tweetSentiment");
             } catch (Exception e) {
                 e.printStackTrace();
                 System.exit(1);
