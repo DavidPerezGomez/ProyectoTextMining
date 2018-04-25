@@ -238,6 +238,7 @@ public class Utils {
             filter.setAttributeIndices("2-last,1");
             filter.setInputFormat(pInstances);
             newInstances = Filter.useFilter(pInstances, filter);
+            newInstances.setRelationName(pInstances.relationName());
         } catch (Exception e) {
             printlnError("Error al filtrar los atributos");
             e.printStackTrace();
