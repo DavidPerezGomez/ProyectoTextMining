@@ -47,6 +47,7 @@ public class FSSInfoGain {
         try {
             AttributeSelection filter = getASFilter(instances);
 			Instances filteredInstances = Filter.useFilter(instances, filter);
+			filteredInstances.setRelationName(instances.relationName());
             Utils.saveInstances(filteredInstances, outputArff);
             if (inputDev != null) {
                 Instances dev = utils.Utils.loadInstances(inputDev);
