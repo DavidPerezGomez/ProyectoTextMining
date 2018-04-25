@@ -50,6 +50,7 @@ public class MainMakeCompatible {
         try {
             //no se si habria que meterle el formato de dev tal vez
             filtro.setInputFormat(dev);
+            filtro.setOutputWordCounts(true);
             devBow = Filter.useFilter(dev, filtro);
             devBow.setRelationName(dev.relationName());
             if (devBow.classIndex() == 0) {

@@ -234,11 +234,12 @@ public class Utils {
     public static Instances moveFirstAttrToLast(Instances pInstances) {
         Instances newInstances = null;
         try {
+            String relationName = pInstances.relationName();
             Reorder filter = new Reorder();
             filter.setAttributeIndices("2-last,1");
             filter.setInputFormat(pInstances);
             newInstances = Filter.useFilter(pInstances, filter);
-            newInstances.setRelationName(pInstances.relationName());
+            newInstances.setRelationName(relationName);
         } catch (Exception e) {
             printlnError("Error al filtrar los atributos");
             e.printStackTrace();

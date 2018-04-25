@@ -5,11 +5,9 @@ import utils.Utils;
 import weka.attributeSelection.InfoGainAttributeEval;
 import weka.attributeSelection.Ranker;
 import weka.core.Instances;
-import weka.core.converters.ArffSaver;
+import weka.core.SerializationHelper;
 import weka.filters.Filter;
 import weka.filters.supervised.attribute.AttributeSelection;
-
-import java.io.File;
 
 public class FSSInfoGain {
 
@@ -44,19 +42,22 @@ public class FSSInfoGain {
         }
         //cargamos el fichero
         Instances instances = utils.Utils.loadInstances(inputArff);
+        String relationName = instances.relationName();
         try {
             AttributeSelection filter = getASFilter(instances);
 			Instances filteredInstances = Filter.useFilter(instances, filter);
-			filteredInstances.setRelationName(instances.relationName());
+			filteredInstances.setRelationName(relationName);
             Utils.saveInstances(filteredInstances, outputArff);
             if (inputDev != null) {
                 Instances dev = utils.Utils.loadInstances(inputDev);
+                relationName = dev.relationName();
                 Instances filteredDev = Filter.useFilter(dev, filter);
+                SerializationHelper.write("/home/david/Escritorio/filtro.model", filter);
+                filteredDev.setRelationName(relationName);
                 Utils.saveInstances(filteredDev, outputDev);
             }
 		} catch (Exception e) {
 			System.out.println("No se ha podido completar el filtrado ");
-			e.printStackTrace();
 		}
         
         
