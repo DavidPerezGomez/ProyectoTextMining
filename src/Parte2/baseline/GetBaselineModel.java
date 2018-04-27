@@ -21,7 +21,7 @@ public class GetBaselineModel {
 		} catch (IndexOutOfBoundsException e) {
 			String documentacion = "Este ejecutable se utiliza para obtener el modelo Baseline (Naive Bayes) y su calidad estimada.\n"
                     + "Dos argumentos esperados:\n"
-                    + "\t1 - Ruta del archivo .arff con las instancias de entrenamiento (la clase debe ser el primer atributo)\n"
+                    + "\t1 - Ruta del archivo .arff con las instancias de entrenamiento\n"
                     + "\t2 - Ruta donde guardar el modelo\n"
                     + "\t3 - Ruta donde guardar la estimación de la calidad\n"
                     + "\nEjemplo: java -jar getBaseline.jar /path/to/input/arff /path/to/output";

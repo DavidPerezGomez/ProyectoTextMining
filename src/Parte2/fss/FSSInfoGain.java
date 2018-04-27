@@ -22,7 +22,7 @@ public class FSSInfoGain {
 			 String documentacion = "Este ejecutable se utiliza para descartar atributos redudantes o irrelevantes para el proceso de clasificacion\n" +
                                             "El archivo .arff original debe tener por lo menos un atributo de tipo string.\n" +
                                             "Dos argumentos esperados:\n" +
-                                            "\t1 - Ruta del archivo .arff a leer (la clase debe ser el primer atributo)\n" +
+                                            "\t1 - Ruta del archivo .arff a leer\n" +
                                             "\t2 - Ruta del archivo .arff a crear\n"+
                                             "Argumentos opcionales:\n"+
                                             "\t3 - Ruta del archivo .arff que se quiere hacer compatible con el .arff filtrado\n"+
