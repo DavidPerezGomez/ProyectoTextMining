@@ -331,12 +331,13 @@ public class Utils {
      * @param pPath ruta del archivo a cargar
      * @return el clasificador cargado.
      */
-    public static void loadModel(String pPath) {
+    public static Object loadModel(String pPath) {
         try {
-            SerializationHelper.read(pPath);
+            return SerializationHelper.read(pPath);
         } catch (Exception e) {
             printlnError("Error al cargar el clasificador");
             e.printStackTrace();
+            return null;
         }
     }
 
