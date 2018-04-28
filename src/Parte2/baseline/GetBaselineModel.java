@@ -29,7 +29,7 @@ public class GetBaselineModel {
 			System.exit(1);
 		}
 
-        Instances train = Utils.loadInstances(trainPath, 0);
+        Instances train = Utils.loadInstances(trainPath);
 		NaiveBayes classifier = getNaiveBayes(train);
 		Utils.saveModel(classifier, modelPath);
 		String results = evaluateClassifier(classifier, train);
@@ -47,6 +47,7 @@ public class GetBaselineModel {
             classifier.buildClassifier(pTrain);
         } catch (Exception e) {
             Utils.printlnError("Error al entrenar el calsificador.");
+            e.printStackTrace();
             System.exit(1);
         }
 	    return classifier;
@@ -60,31 +61,26 @@ public class GetBaselineModel {
      * @return
      */
     private static String evaluateClassifier(Classifier pClassifier, Instances pInstances) {
-	    StringBuilder results = new StringBuilder();
-
+        StringBuilder results = new StringBuilder();
         try {
-            Evaluation evNoHonesta = new Evaluation(pInstances);
-            evNoHonesta.evaluateModel(pClassifier, pInstances);
-            results.append("EVALUACIÓN NO HONESTA\n");
-            results.append("\n");
-            results.append(evNoHonesta.toClassDetailsString());
-            results.append("\n");
-            results.append(evNoHonesta.toMatrixString());
+            Evaluation eval10Fold = Utils.evalKFoldCrossValidation(pClassifier, pInstances, 10, 1);
+
+            pClassifier.buildClassifier(pInstances);
+            Evaluation evalNH = new Evaluation(pInstances);
+            evalNH.evaluateModel(pClassifier, pInstances);
+
+            results.append("10-FOLD CROSS VALIDATION\n");
+            results.append(eval10Fold.toSummaryString() + "\n");
+            results.append(eval10Fold.toClassDetailsString() + "\n");
+            results.append(eval10Fold.toMatrixString() + "\n");
+            results.append("\nEVAL NO HONESTA\n");
+            results.append(evalNH.toSummaryString() + "\n");
+            results.append(evalNH.toClassDetailsString() + "\n");
+            results.append(evalNH.toMatrixString() + "\n");
         } catch (Exception e) {
             e.printStackTrace();
+            System.exit(1);
         }
-
-         try {
-            Evaluation evKFCV = Utils.evalKFoldCrossValidation(pClassifier, pInstances, 10, 1);
-            results.append("\nEVALUACIÓN 10-FOLD CROSS-VALIDATION\n");
-            results.append("\n");
-            results.append(evKFCV.toClassDetailsString());
-            results.append("\n");
-            results.append(evKFCV.toMatrixString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         return results.toString();
     }
 }

@@ -83,9 +83,11 @@ public class GetMP {
 
             StringBuilder results = new StringBuilder();
             results.append("10-FOLD CROSS VALIDATION\n");
+            results.append(eval10Fold.toSummaryString() + "\n");
             results.append(eval10Fold.toClassDetailsString() + "\n");
             results.append(eval10Fold.toMatrixString() + "\n");
             results.append("\nEVAL NO HONESTA\n");
+            results.append(evalNH.toSummaryString() + "\n");
             results.append(evalNH.toClassDetailsString() + "\n");
             results.append(evalNH.toMatrixString() + "\n");
             Utils.writeToFile(results.toString(), pPath);
