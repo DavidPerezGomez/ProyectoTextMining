@@ -2,6 +2,7 @@ package Parte3.predictions;
 
 import utils.Utils;
 import weka.classifiers.Classifier;
+import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
 
@@ -33,13 +34,19 @@ public class MainPredictions {
 
     private static String classifyInstances(Classifier pClassifier, Instances pInstances) {
         StringBuilder result = new StringBuilder();
-        result.append(String.format("Índice de la instancia -> Clase determinada por el clasificador\n"));
-        result.append(String.format("----------------------------------------------------------------\n\n"));
+        result.append(String.format("Índice de la instancia -> Clase determinada por el clasificador | Clase real de la instancia\n"));
+        result.append(String.format("--------------------------------------------------------------------------------------------\n\n"));
+        Attribute classAttr = pInstances.classAttribute();
         for (int i = 0; i < pInstances.numInstances(); i++) {
             try {
                 Instance instance = pInstances.instance(i);
                 double c = pClassifier.classifyInstance(instance);
-                result.append(String.format("%d -> %s\n", i, pInstances.classAttribute().value((int) c)));
+                String prediction = classAttr.value((int) c);
+                String real_class = classAttr.value((int) instance.classValue());
+                String success = "";
+                if (prediction.equals(real_class))
+                    success = " --> correcto";
+                result.append(String.format("%d -> %s | %s%s\n", i, prediction, real_class, success));
             } catch (Exception e) {
                 result.append(String.format("%d -> error al clasificar\n", i));
                 e.printStackTrace();

@@ -89,7 +89,7 @@ public class GetOptimalMP {
         StringBuilder results = new StringBuilder();
         results.append("Parámetros óptimos del clasificador Multilayer Perceptron para las instancias dadas:\n");
         results.append(String.format("\thidden layers: %s", bestHiddenLayerNodes));
-        results.append(String.format("\tvalidation threshold: %f", bestLearningRate));
+        results.append(String.format("\n\tlearning rate: %f", bestLearningRate));
 
         return results.toString();
     }

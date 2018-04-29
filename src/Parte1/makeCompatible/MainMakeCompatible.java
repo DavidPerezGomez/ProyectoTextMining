@@ -55,7 +55,7 @@ public class MainMakeCompatible {
             devBow.setRelationName(dev.relationName());
             if (devBow.classIndex() == 0) {
                     devBow = Utils.moveFirstAttrToLast(devBow);
-                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
