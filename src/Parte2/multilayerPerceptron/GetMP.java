@@ -67,7 +67,7 @@ public class GetMP {
     }
 
     /**
-     * Guarda los resultados de la estminación de la calidad mediante evaluación no honesta y 10-fold cross-validation
+     * Guarda los resultados de la estimación de la calidad mediante evaluación no honesta y 10-fold cross-validation
      * del clasificador y lsa instancias dados.
      * @param pClassifier
      * @param pInstances

@@ -41,8 +41,6 @@ public class GetOptimalMP {
         MultilayerPerceptron classifier = new MultilayerPerceptron();
 
         // atributo 1: hiddenLayers
-//        String[] hiddenLayersOptions = {"a", "i", "o", "t"};
-//        String bestHiddenLayers = "";
         int minHiddenLayerNodes = 0;
         int maxHiddenLayerNodes = 10;
         int bestHiddenLayerNodes = -1;

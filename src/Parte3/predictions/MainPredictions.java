@@ -32,6 +32,12 @@ public class MainPredictions {
         Utils.writeToFile(result, resultPath);
     }
 
+    /**
+     * Utiliza el clasificador dado para predecir la clase de las instancias dadas y devuelve un String con los resultados.
+     * @param pClassifier
+     * @param pInstances
+     * @return
+     */
     private static String classifyInstances(Classifier pClassifier, Instances pInstances) {
         StringBuilder result = new StringBuilder();
         result.append(String.format("Índice de la instancia -> Clase determinada por el clasificador | Clase real de la instancia\n"));
